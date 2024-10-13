@@ -1,0 +1,76 @@
+create database superMercado;
+
+use superMercado;
+
+create table productos (
+	id int primary key auto_increment,
+	nombre varchar(50) not null,
+	descripcion text,
+	precio decimal(10, 2) not null,
+	cantidad int not null,
+	categoria varchar(50),
+	imagen varchar(255)	
+)
+
+drop table productos
+
+
+INSERT INTO productos (nombre, descripcion, precio, cantidad, categoria, imagen) VALUES 
+('Manzana Roja', 'Manzanas frescas y jugosas.', 0.99, 100, 'Frutas', 'manzana.jpg'),
+('Leche Entera', 'Leche entera de 1 litro.', 1.50, 50, 'Lácteos', 'leche_entera.jpg'),
+('Pan Integral', 'Pan integral bajo en calorías.', 2.20, 30, 'Panadería', 'pan_integral.jpg'),
+('Huevos', 'Huevos frescos, docena.', 2.50, 80, 'Huevos y Lácteos', 'huevos.jpg'),
+('Zanahorias', 'Zanahorias frescas de 1kg.', 1.10, 60, 'Verduras', 'zanahorias.jpg'),
+('Pechuga de Pollo', 'Pechuga de pollo fresca, 1kg.', 5.99, 40, 'Carnes', 'pechuga_pollo.jpg'),
+('Queso Cheddar', 'Queso cheddar maduro, 200g.', 3.99, 25, 'Lácteos', 'queso_cheddar.jpg'),
+('Cereal Integral', 'Cereal integral con fibra.', 4.50, 35, 'Desayunos', 'cereal_integral.jpg'),
+('Aceite de Oliva', 'Aceite de oliva virgen extra, 500ml.', 6.50, 20, 'Aceites y Salsas', 'aceite_oliva.jpg'),
+('Pasta Espagueti', 'Pasta espagueti de trigo, 500g.', 1.20, 100, 'Granos', 'pasta_espagueti.jpg'),
+('Arroz Blanco', 'Arroz blanco, 1kg.', 0.80, 120, 'Granos', 'arroz_blanco.jpg'),
+('Azúcar', 'Azúcar blanca, 1kg.', 1.00, 150, 'Dulces y Endulzantes', 'azucar.jpg'),
+('Café Molido', 'Café molido, 250g.', 4.00, 40, 'Bebidas', 'cafe_molido.jpg'),
+('Jugo de Naranja', 'Jugo de naranja natural, 1 litro.', 3.20, 60, 'Bebidas', 'jugo_naranja.jpg'),
+('Mantequilla', 'Mantequilla sin sal, 250g.', 2.80, 30, 'Lácteos', 'mantequilla.jpg'),
+('Atún en Lata', 'Atún en lata, 140g.', 1.50, 90, 'Conservas', 'atun.jpg'),
+('Sardinas en Salsa', 'Sardinas en salsa de tomate, lata de 125g.', 1.20, 80, 'Conservas', 'sardinas.jpg'),
+('Papel Higiénico', 'Paquete de 12 rollos de papel higiénico.', 5.00, 70, 'Higiene', 'papel_higienico.jpg'),
+('Champú', 'Champú hidratante para todo tipo de cabello, 500ml.', 4.50, 40, 'Cuidado Personal', 'champu.jpg'),
+('Jabón de Tocador', 'Jabón en barra, 100g.', 1.00, 90, 'Cuidado Personal', 'jabon.jpg'),
+('Crema Dental', 'Crema dental con flúor, 100ml.', 2.50, 50, 'Cuidado Personal', 'crema_dental.jpg'),
+('Cerveza Lager', 'Cerveza lager, 355ml.', 1.50, 100, 'Bebidas Alcohólicas', 'cerveza.jpg'),
+('Galletas de Chocolate', 'Galletas con chispas de chocolate, 200g.', 2.00, 75, 'Snacks', 'galletas_chocolate.jpg'),
+('Chocolate en Polvo', 'Chocolate en polvo para preparar bebidas, 500g.', 3.00, 60, 'Dulces y Endulzantes', 'chocolate.jpg'),
+('Mayonesa', 'Mayonesa light, 400g.', 2.80, 40, 'Aceites y Salsas', 'mayonesa.jpg'),
+('Mostaza', 'Mostaza clásica, 250g.', 1.50, 50, 'Aceites y Salsas', 'mostaza.jpg'),
+('Papas Fritas', 'Papas fritas en bolsa, 150g.', 1.20, 80, 'Snacks', 'papas_fritas.jpg'),
+('Detergente en Polvo', 'Detergente en polvo para ropa, 1kg.', 3.50, 50, 'Limpieza', 'detergente.jpg'),
+('Suavizante de Telas', 'Suavizante de telas, 500ml.', 2.20, 40, 'Limpieza', 'suavizante.jpg'),
+('Lentejas', 'Lentejas, 500g.', 1.10, 90, 'Granos', 'lentejas.jpg'),
+('Frijoles Negros', 'Frijoles negros, 500g.', 1.20, 100, 'Granos', 'frijoles_negros.jpg'),
+('Yogur Natural', 'Yogur natural sin azúcar, 1 litro.', 2.50, 50, 'Lácteos', 'yogur_natural.jpg'),
+('Helado de Vainilla', 'Helado de vainilla, 500ml.', 3.50, 35, 'Congelados', 'helado_vainilla.jpg'),
+('Pizza Congelada', 'Pizza congelada de pepperoni, 450g.', 4.50, 20, 'Congelados', 'pizza_congelada.jpg'),
+('Té Verde', 'Té verde en bolsas, 25 unidades.', 2.80, 60, 'Bebidas', 'te_verde.jpg'),
+('Refresco Cola', 'Refresco de cola, 2 litros.', 1.80, 120, 'Bebidas', 'refresco_cola.jpg'),
+('Mermelada de Fresa', 'Mermelada de fresa, 300g.', 2.50, 40, 'Dulces y Endulzantes', 'mermelada_fresa.jpg'),
+('Vinagre Blanco', 'Vinagre blanco, 1 litro.', 1.20, 30, 'Aceites y Salsas', 'vinagre_blanco.jpg'),
+('Sal de Mesa', 'Sal de mesa, 1kg.', 0.90, 100, 'Condimentos', 'sal_mesa.jpg'),
+('Pimienta Negra', 'Pimienta negra molida, 100g.', 3.00, 50, 'Condimentos', 'pimienta_negra.jpg'),
+('Salsa de Soya', 'Salsa de soya, 200ml.', 2.20, 40, 'Aceites y Salsas', 'salsa_soya.jpg'),
+('Toallas de Papel', 'Paquete de 6 rollos de toallas de papel.', 4.00, 60, 'Higiene', 'toallas_papel.jpg'),
+('Frutillas Congeladas', 'Frutillas congeladas, 500g.', 3.00, 30, 'Congelados', 'frutillas_congeladas.jpg'),
+('Garbanzos', 'Garbanzos secos, 500g.', 1.50, 80, 'Granos', 'garbanzos.jpg'),
+('Pollo Congelado', 'Pollo entero congelado, 1.5kg.', 7.99, 25, 'Carnes', 'pollo_congelado.jpg'),
+('Chorizo', 'Chorizo picante, 500g.', 4.50, 30, 'Carnes', 'chorizo.jpg'),
+('Filete de Res', 'Filete de res, 1kg.', 12.00, 15, 'Carnes', 'filete_res.jpg'),
+('Nuggets de Pollo', 'Nuggets de pollo congelados, 400g.', 3.50, 40, 'Congelados', 'nuggets_pollo.jpg'),
+('Jamón Cocido', 'Jamón cocido en lonchas, 200g.', 3.00, 35, 'Carnes', 'jamon_cocido.jpg'),
+('Galletas Saladas', 'Galletas saladas, 300g.', 2.20, 70, 'Snacks', 'galletas_saladas.jpg'),
+('Cereal de Maíz', 'Cereal de maíz, 500g.', 3.50, 45, 'Desayunos', 'cereal_maiz.jpg'),
+('Leche Descremada', 'Leche descremada, 1 litro.', 1.40, 55, 'Lácteos', 'leche_descremada.jpg'),
+('Yogur de Frutas', 'Yogur de frutas, 1 litro.', 2.80, 40, 'Lácteos', 'yogur_frutas.jpg'),
+('Empanadas Congeladas', 'Empanadas de carne congeladas, 6 unidades.', 4.20, 25, 'Congelados', 'empanadas.jpg'),
+('Queso Mozzarella', 'Queso mozzarella rallado, 200g.', 4.00, 20, 'Lácteos', 'queso_mozzarella.jpg');
+
+
+select * from productos
