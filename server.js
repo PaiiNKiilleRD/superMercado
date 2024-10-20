@@ -8,6 +8,7 @@ import { z } from "zod";
 const app = express()
 const port = 3000; //? 3000
 
+app.use(express.static("public"));
 app.use(express.json());
 
 //* Config Db
