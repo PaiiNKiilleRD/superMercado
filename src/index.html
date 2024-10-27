@@ -38,7 +38,7 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex" role="search" onsubmit="buscarProductos(e)">
+                <form class="d-flex" role="search" onsubmit="buscarProductos(event)">
                     <input id="inputSearch" class="form-control me-2" type="search" placeholder="Search"
                         aria-label="Search" />
                     <button id="btnSubmit" class="btn btn-outline-success" type="submit">
@@ -65,8 +65,8 @@
         const resp = await fetch('/productos');
         const productos = await resp.json();
 
-        // cargarProductos(productos);
-        // cargarCategorias(productos);
+        cargarProductos(productos);
+        cargarCategorias(productos);
 
     }
 
@@ -89,15 +89,15 @@
     }
 
     //  Buscar productos 
-    async function buscarProductos(e) {
-        e.preventDefault();
+    async function buscarProductos(event) {
+        event.preventDefault();
 
         const inputSearch = document.getElementById('inputSearch').value;
         const btnSubmit = document.getElementById('btnSubmit').value;
 
-        const resp = await fetch(`/productos/buscar?search=${inputSearch}`);
+        const resp = await fetch(`/productos/buscar?nombre=${inputSearch}`);
         const productos = await resp.json();
-
+        clearPantalla()
 
         renderProductos(productos);
 
@@ -106,10 +106,7 @@
     //  Filtrar Por Categoria
     async function filtrarPorCategoria(categoria) {
         const resp = await fetch(`/productos/buscar?categoria=${categoria}`);
-        if (!resp.ok) {
-            console.error(`Error al buscar productos por categoria: ${resp.statusText}`);
-            return;
-        }
+
         const productos = await resp.json();
         clearPantalla();
         renderProductos(productos);
