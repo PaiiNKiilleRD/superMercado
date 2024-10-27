@@ -22,10 +22,11 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Productos</a>
+                        <a class="nav-link active" aria-current="page" href="#"
+                            onclick="filtrarPorCategoria('Frutas')">Frutas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Especiales</a>
+                        <a class="nav-link" href="#" onclick="filtrarPorCategoria('Carnes')">Carnes</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -33,20 +34,14 @@
                             Categoria
                         </a>
                         <ul class="dropdown-menu" id="categoriaMenu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider" />
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </li>
+
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button class="btn btn-outline-success" type="submit">
+                <form class="d-flex" role="search" onsubmit="buscarProductos(e)">
+                    <input id="inputSearch" class="form-control me-2" type="search" placeholder="Search"
+                        aria-label="Search" />
+                    <button id="btnSubmit" class="btn btn-outline-success" type="submit">
                         Search
                     </button>
                 </form>
@@ -70,8 +65,8 @@
         const resp = await fetch('/productos');
         const productos = await resp.json();
 
-        cargarProductos(productos);
-        cargarCategorias(productos);
+        // cargarProductos(productos);
+        // cargarCategorias(productos);
 
     }
 
@@ -88,7 +83,42 @@
                 <a class="dropdown-item" href="#" onclick="filtrarPorCategoria('${p.categoria}')">
                     ${p.nombre}
                 </a>
-            </li>`).join('');
+            </li>`
+
+        );
+    }
+
+    //  Buscar productos 
+    async function buscarProductos(e) {
+        e.preventDefault();
+
+        const inputSearch = document.getElementById('inputSearch').value;
+        const btnSubmit = document.getElementById('btnSubmit').value;
+
+        const resp = await fetch(`/productos/buscar?search=${inputSearch}`);
+        const productos = await resp.json();
+
+
+        renderProductos(productos);
+
+    }
+
+    //  Filtrar Por Categoria
+    async function filtrarPorCategoria(categoria) {
+        const resp = await fetch(`/productos/buscar?categoria=${categoria}`);
+        if (!resp.ok) {
+            console.error(`Error al buscar productos por categoria: ${resp.statusText}`);
+            return;
+        }
+        const productos = await resp.json();
+        clearPantalla();
+        renderProductos(productos);
+    }
+
+    //  Limpiar Pantalla
+    function clearPantalla() {
+        const productContainer = document.getElementById('productContainer');
+        productContainer.innerHTML = '';
     }
 
     //  Cargar Productos

@@ -41,7 +41,7 @@ const articleSchema = z.object({
 //* API Route
 
 app.get("/productos", (req, res) => {
-    db.query(`select * from productos`, (error, result) => {
+    db.query(`SELECT * FROM productos`, (error, result) => {
         if (error) {
             return res.status(500).json({ error: err.message })
         }
@@ -49,16 +49,11 @@ app.get("/productos", (req, res) => {
     })
 });
 
-// const body = document.querySelector("body");
-// app.get("/", (red, res) => {
-//     body.innerText = "Nada"
-// })
-
 app.get("/productos/buscar", (req, res) => {
 
     const { nombre, categoria } = req.query;
 
-    let query = `select * from supermercado.productos where `
+    let query = `SELECT * FROM supermercado.productos WHERE `
 
     const params = [];
 
@@ -84,6 +79,14 @@ app.get("/productos/buscar", (req, res) => {
     })
 });
 
+app.get("/categorias", (req, res) => {
+    db.query(`SELECT DISTINCT categoria FROM supermercado.productos`, (err, result) => {
+        if (err) {
+            return res.status(500).json({ err: err.message })
+        }
+        return res.json(result);
+    })
+});
 
 
 //* app.post();
