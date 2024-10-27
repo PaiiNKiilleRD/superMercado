@@ -8,7 +8,7 @@ import { z } from "zod";
 const app = express()
 const port = 3000; //? 3000
 
-app.use(express.static("public"));
+app.use(express.static("src"));
 app.use(express.json());
 
 //* Config Db
@@ -29,8 +29,6 @@ db.connect(err => {
     console.info("Conexion exitosa")
 })
 
-//* node --watch server.js
-
 const articleSchema = z.object({
     nombre: z.string().min(1),
     descripcion: z.string().optional(),
@@ -42,7 +40,7 @@ const articleSchema = z.object({
 
 //* API Route
 
-app.get("/product", (req, res) => {
+app.get("/productos", (req, res) => {
     db.query(`select * from productos`, (error, result) => {
         if (error) {
             return res.status(500).json({ error: err.message })
@@ -56,7 +54,7 @@ app.get("/product", (req, res) => {
 //     body.innerText = "Nada"
 // })
 
-app.get("/product/search", (req, res) => {
+app.get("/productos/buscar", (req, res) => {
 
     const { nombre, categoria } = req.query;
 

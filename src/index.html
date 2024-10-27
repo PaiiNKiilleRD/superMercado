@@ -32,7 +32,7 @@
                             aria-expanded="false">
                             Categoria
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" id="categoriaMenu">
                             <li><a class="dropdown-item" href="#">Action</a></li>
                             <li><a class="dropdown-item" href="#">Another action</a></li>
                             <li>
@@ -55,48 +55,10 @@
     </nav>
 
     <main class="container-fluid w-100">
-        <div class="container text-center bg-primary mt-5 ">
+        <div class="container text-center bg-tertiary mt-5 ">
             <div class="row " id="productContainer">
-                <div class="col m-2">
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://www.cronista.com/files/image/730/730555/658f0057e02ea.jpg"
-                            class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Anadir al carrito</a>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col m-2">
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://www.cronista.com/files/image/730/730555/658f0057e02ea.jpg"
-                            class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the
-                                bulk
-                                of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Anadir al carrito</a>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col m-2">
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://www.cronista.com/files/image/730/730555/658f0057e02ea.jpg"
-                            class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up
-                                the bulk
-                                of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Anadir al carrito</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </main>
@@ -105,19 +67,51 @@
 <script>
     window.onload = async function () {
 
-        try {
-            const res = await fetch('/product')
-            const data = await res.json()
+        const resp = await fetch('/productos');
+        const productos = await resp.json();
 
-            const productContainer = document.getElementById('productContainer');
+        cargarProductos(productos);
+        cargarCategorias(productos);
 
-            const urlPic = 'https://www.cronista.com/files/image/730/730555/658f0057e02ea.jpg'
+    }
 
-            data.forEach(producto => {
-                const productCard = `
+    // Cargar Categorias
+    async function cargarCategorias(productos) {
+
+        const resp = await fetch('/categorias');
+        const categorias = await resp.json();
+
+        const categoriaMenu = document.getElementById('categoriaMenu');
+
+        categoriaMenu.innerHTML = productos.map(p =>
+            `<li>
+                <a class="dropdown-item" href="#" onclick="filtrarPorCategoria('${p.categoria}')">
+                    ${p.nombre}
+                </a>
+            </li>`).join('');
+    }
+
+    //  Cargar Productos
+    async function cargarProductos() {
+
+        const resp = await fetch('/productos');
+        const productos = await resp.json();
+
+        renderProductos(productos);
+    }
+
+    //  Renderizar Productos
+    function renderProductos(productos) {
+
+        const productContainer = document.getElementById('productContainer');
+
+        const urlPic = 'https://www.cronista.com/files/image/730/730555/658f0057e02ea.jpg'
+
+        productos.forEach(producto => {
+            const productCard = `
                 <div class="col m-2">
                     <div class="card" style="width: 18rem;">
-                        <img src="${producto.imagen} || ${urlPic}" class="card-img-top" alt="${producto.nombre}">
+                        <img src="${urlPic}" class="card-img-top" alt="${producto.nombre}">
                         <h5 class="card-title">${producto.nombre}</h5>
                         <p class="card-text">${producto.descripcion}</p>
                         <p class="card-text">${producto.precio}</p>
@@ -125,18 +119,13 @@
                         <a href="#" class="btn btn-primary">Anadir al carrito</a>
                         </div>
                 </div>
-                
+
                 `;
 
-                productContainer.innerHTML += productCard;
+            productContainer.innerHTML += productCard;
 
+        });
 
-            });
-
-            console.log(data)
-        } catch (error) {
-            console.error(`Error: ${error}`)
-        }
     }
 </script>
 
