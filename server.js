@@ -4,12 +4,15 @@ import express from "express";
 import mysql from "mysql2";
 import { z } from "zod";
 
+import cookieParser from 'cookie-parser'
+
 //* App
 const app = express()
 const port = 3000; //? 3000
 
 app.use(express.static("src"));
 app.use(express.json());
+app.use(cookieParser())
 
 //* Config Db
 
@@ -87,6 +90,32 @@ app.get("/categorias", (req, res) => {
         return res.json(result);
     })
 });
+
+
+app.post("/carrito/agregar", (req, res) => {
+    const { id, nombre, precio, quantity = 1 } = req.body;
+
+    let cart = req.cookies.cart ? JSON.parse(req.cookies.cart) : [];
+
+    const existItem = cart.find(item => item.id === id);
+
+
+    if (existItem) {
+        existItem.quantity += quantity;
+    } else {
+        cart.push({ id, nombre, precio, quantity });
+    }
+    console.log(cart)
+
+    res.cookie("cart", JSON.stringify(cart), { maxAge: 7 * 24 * 60 * 60 * 1000 }); // Cookie expires in 7 days
+    res.json(cart);
+});
+
+app.get("/carrito", (req, res) => {
+    const cart = req.cookies.cart ? JSON.parse(req.cookies.cart) : [];
+    res.json(cart);
+})
+
 
 
 //* app.post();

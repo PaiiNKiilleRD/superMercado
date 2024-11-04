@@ -50,6 +50,8 @@
     </nav>
 
     <main class="container-fluid w-100">
+        <h2>Carrito</h2>
+        <div id="cart"></div>
         <div class="container text-center bg-tertiary mt-5 ">
             <div class="row " id="productContainer">
 
@@ -68,6 +70,8 @@
         cargarProductos(productos);
         cargarCategorias(productos);
 
+        displayCart();
+
     }
 
     // Cargar Categorias
@@ -80,10 +84,10 @@
 
         categoriaMenu.innerHTML = productos.map(p =>
             `<li>
-                <a class="dropdown-item" href="#" onclick="filtrarPorCategoria('${p.categoria}')">
-                    ${p.nombre}
-                </a>
-            </li>`
+                    <a class="dropdown-item" href="#" onclick="filtrarPorCategoria('${p.categoria}')">
+                        ${p.nombre}
+                    </a>
+                </li>`
 
         );
     }
@@ -136,23 +140,74 @@
 
         productos.forEach(producto => {
             const productCard = `
-                <div class="col m-2">
-                    <div class="card" style="width: 18rem;">
-                        <img src="${urlPic}" class="card-img-top" alt="${producto.nombre}">
-                        <h5 class="card-title">${producto.nombre}</h5>
-                        <p class="card-text">${producto.descripcion}</p>
-                        <p class="card-text">${producto.precio}</p>
-                        <p class="card-text">${producto.cantidad}</p>
-                        <a href="#" class="btn btn-primary">Anadir al carrito</a>
-                        </div>
-                </div>
+                    <div class="col m-2">
+                        <div class="card" style="width: 18rem;">
+                            <img src="${urlPic}" class="card-img-top" alt="${producto.nombre}">
+                            <h5 class="card-title">${producto.nombre}</h5>
+                            <p class="card-text">${producto.descripcion}</p>
+                            <p class="card-text">${producto.precio}</p>
+                            <p class="card-text">${producto.cantidad}</p>
+                            <a href="#" class="btn btn-primary" onclick="addToCart('${producto.id}', '${producto.nombre}', '${producto.precio}')">Anadir al carrito</a>
+                            </div>
+                    </div>
 
-                `;
+                    `;
 
             productContainer.innerHTML += productCard;
 
         });
 
+    }
+
+
+    // Carrito
+    const addToCart = (id, nombre, precio) => {
+
+        fetch('/carrito/agregar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id,
+                nombre,
+                precio,
+                quantity: 1
+            }),
+        })
+            .then(res => res.json())
+            .then(data => {
+                displayCart();
+            })
+            .catch(error => {
+                console.error('Error adding to cart:', error);
+            });
+    }
+    const displayCart = () => {
+        fetch('/carrito')
+            .then(res => res.json())
+            .then(data => {
+                const cart = document.getElementById('cart');
+                cart.innerHTML = '';
+                console.log(data)
+                data.map(item => {
+                    const cartItem = document.createElement('div');
+                    const urlPic = 'https://www.cronista.com/files/image/730/730555/658f0057e02ea.jpg'
+
+                    cartItem.innerHTML = `
+                <div class="col m-2">
+                    <div class="card" style="width: 18rem;">
+                        <img src="${urlPic}" class="card-img-top" alt="${item.nombre}">
+                        <h5 class="card-title">${item.nombre}</h5>
+                        <p class="card-text">$${item.precio}</p>
+                        <p class="card-text">Cantidad: ${item.quantity}</p>
+                        <a href="#" class="btn btn-primary">Anadir al carrito</a>
+                    </div>
+                </div>`;
+
+                    cart.appendChild(cartItem);
+                });
+            });
     }
 </script>
 
