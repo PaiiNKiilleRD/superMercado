@@ -50,7 +50,7 @@ const articleSchema = z.object({
 
 //* API Route
 
-app.get("/productos", (req, res) => {
+app.get("https://super-mercado-weld.vercel.app//productos", (req, res) => {
     db.query(`SELECT * FROM productos`, (error, result) => {
         if (error) {
             return res.status(500).json({ error: err.message })
