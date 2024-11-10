@@ -1,4 +1,10 @@
-
+// root:
+// dZhXUWjgqsgtTKZZPdUTguDlJUYRthfo
+// @
+// junction.proxy.rlwy.net
+// :
+// 18796
+// /railway
 
 import express from "express";
 import mysql from "mysql2";
@@ -17,10 +23,11 @@ app.use(cookieParser())
 //* Config Db
 
 const db = mysql.createConnection({
-    host: "localhost",
+    host: "junction.proxy.rlwy.net",
+    port: 18796,
     user: "root",
-    password: "thebest1704qQ!",
-    database: "superMercado"
+    password: "dZhXUWjgqsgtTKZZPdUTguDlJUYRthfo",
+    database: "railway"
 })
 
 db.connect(err => {
@@ -56,7 +63,7 @@ app.get("/productos/buscar", (req, res) => {
 
     const { nombre, categoria } = req.query;
 
-    let query = `SELECT * FROM supermercado.productos WHERE `
+    let query = `SELECT * FROM productos WHERE `
 
     const params = [];
 
@@ -83,7 +90,7 @@ app.get("/productos/buscar", (req, res) => {
 });
 
 app.get("/categorias", (req, res) => {
-    db.query(`SELECT DISTINCT categoria FROM supermercado.productos`, (err, result) => {
+    db.query(`SELECT DISTINCT categoria FROM productos`, (err, result) => {
         if (err) {
             return res.status(500).json({ err: err.message })
         }
